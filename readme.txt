@@ -3,3 +3,4 @@ Git is a software.
 stupid boss
 new line
 master new line
+new line feature
