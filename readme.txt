@@ -4,3 +4,6 @@ stupid boss
 new line
 master new line
 new line feature
+new line dev  --no-ff
+new line bug
+new line dev stash
