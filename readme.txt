@@ -8,3 +8,4 @@ new line dev  --no-ff
 new line dev stash list
 
 new line dev learngit
+new line dev clone
