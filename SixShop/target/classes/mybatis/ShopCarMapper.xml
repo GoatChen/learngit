@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.six.dao.ShopCarMapper">
+  <resultMap id="ShopGoodsMap" type="com.six.pojo.ShopGoods">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="size" jdbcType="VARCHAR" property="size" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="picPojoPath" jdbcType="VARCHAR" property="picPojoPath" />
+  </resultMap>
+  
+  
+  <resultMap id="ShopCatMap" type="com.six.pojo.ShopCar">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goods_id" jdbcType="INTEGER" property="goods_id" />
+    <result column="buy_id" jdbcType="INTEGER" property="buy_id" />
+    <result column="sell_id" jdbcType="INTEGER" property="sell_id" />
+    <result column="car_gnum" jdbcType="INTEGER" property="car_gnum" />
+  </resultMap>
+  
+  <resultMap id="ShopAddressMap" type="com.six.pojo.ShopAddress">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="buy_id" jdbcType="INTEGER" property="buy_id" />
+    <result column="isDefault" jdbcType="INTEGER" property="isDefault" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  
+  <resultMap id="ShopGoodsCategoryMap" type="com.six.pojo.ShopGoodsCategory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="categoryName" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_id" jdbcType="INTEGER" property="category_id" />
+  </resultMap>
+
+    <!-- 查询個人購物車信息 -->
+	<select id="getShopCarByUserId" resultMap="ShopCatMap" >
+		select c.*, g.* from shop_car c, shop_goods g
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="userid != null and userid != '' ">
+				and c.buy_id = #{userid}
+			</if>
+			<if test="userid != null and userid != '' ">
+				and c.goods_id = g.id
+			</if>
+		</trim>
+		order by c.creationDate DESC
+	</select>
+	
+	<!-- 查询個人購物車商品信息 -->
+	<select id="getShopGoodsByUserId" resultMap="ShopGoodsMap">
+		select c.*, g.* from shop_car c, shop_goods g
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="userid != null and userid != '' ">
+				and c.buy_id = #{userid}
+			</if>
+			<if test="userid != null and userid != '' ">
+				and c.goods_id = g.id
+			</if>
+		</trim>
+		order by c.creationDate DESC
+	</select>
+	
+	<!-- 模糊查询个人购物车信息 -->
+	<select id="getShopCarTypeById" resultMap="ShopCatMap" >
+		select c.*, g.* from shop_car c, shop_goods g
+		<trim prefix="where" prefixOverrides="and | or">
+		    <if test="category1_id != null and category1_id != '' ">
+				and g.category1_id = #{category1_id}
+			</if>
+			<if test="userid != null and userid != '' ">
+				and c.buy_id = #{userid}
+			</if>
+			<if test="userid != null and userid != '' ">
+				and c.goods_id = g.id
+			</if>
+		</trim>
+		order by c.creationDate DESC
+	</select>
+	
+	<!-- 查询一级列表信息 -->
+	<select id="getcategoryLevel1List" resultMap="ShopGoodsCategoryMap" >
+		select id, categoryName, category_id from shop_goodscategory
+		    where category_id = 0
+	</select>
+	
+	<!-- 模糊查询个人购物车商品信息 -->
+	<select id="getShopGoodsTypeById" resultMap="ShopGoodsMap">
+		select c.*, g.* from shop_car c, shop_goods g
+		<trim prefix="where" prefixOverrides="and | or">
+		    <if test="category1_id != null and category1_id != '' ">
+				and g.category1_id = #{category1_id}
+			</if>
+			<if test="userid != null and userid != '' ">
+				and c.buy_id = #{userid}
+			</if>
+			<if test="userid != null and userid != '' ">
+				and c.goods_id = g.id
+			</if>
+		</trim>
+		order by c.creationDate DESC
+	</select>
+	
+	<!-- (商品名称)模糊查询个人购物车信息 -->
+	<select id="getShopCarTypeByName" resultMap="ShopCatMap" >
+		select c.*, g.* from shop_car c, shop_goods g
+		<trim prefix="where" prefixOverrides="and | or">
+		    <if test="goodsName != null and goodsName != '' ">
+				and g.name like concat('%',#{goodsName},'%')
+			</if>
+			<if test="userid != null and userid != '' ">
+				and c.buy_id = #{userid}
+			</if>
+			<if test="userid != null and userid != '' ">
+				and c.goods_id = g.id
+			</if>
+		</trim>
+		order by c.creationDate DESC
+	</select>
+	
+	<!-- (商品名称)模糊查询个人购物车商品信息 -->
+	<select id="getShopGoodsTypeByName" resultMap="ShopGoodsMap">
+		select c.*, g.* from shop_car c, shop_goods g
+		<trim prefix="where" prefixOverrides="and | or">
+		    <if test="goodsName != null and goodsName != '' ">
+				and g.name like concat('%',#{goodsName},'%')
+			</if>
+			<if test="userid != null and userid != '' ">
+				and c.buy_id = #{userid}
+			</if>
+			<if test="userid != null and userid != '' ">
+				and c.goods_id = g.id
+			</if>
+		</trim>
+		order by c.creationDate DESC
+	</select>
+	
+	<!-- 根据购物车ID查询个人购物车信息 -->
+	<select id="getShopCarByCarId" resultMap="ShopCatMap" >
+		select c.*, g.* from shop_car c, shop_goods g
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="id != null and id != '' ">
+				and c.id = #{id}
+			</if>
+			<if test="id != null and id != '' ">
+				and c.goods_id = g.id
+			</if>
+		</trim>
+		order by c.creationDate DESC
+	</select>
+	
+	<!-- 根据购物车ID查询个人购物车商品信息 -->
+	<select id="getShopGoodsByCarId" resultMap="ShopGoodsMap">
+		select c.*, g.* from shop_car c, shop_goods g
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="id != null and id != '' ">
+				and c.id = #{id}
+			</if>
+			<if test="id != null and id != '' ">
+				and c.goods_id = g.id
+			</if>
+		</trim>
+		order by c.creationDate DESC
+	</select>
+	
+	<!-- 根据用户idID查询用户地址信息 -->
+	<select id="getShopAddressByUserId" resultType="com.six.pojo.ShopAddress">
+		select a.* from shop_address a
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="userid != null and userid != '' ">
+				and a.buy_id = #{userid}
+			</if>
+			<if test="userid != null and userid != '' ">
+				and a.isDefault = 1
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 插入待订单表信息 -->
+	<insert id="insertShopOrder" parameterType="com.six.pojo.ShopOrder">
+		INSERT INTO
+		shop_order(code,phone,name,address,goodsNum,totalPrice,
+		             isSend,isReceive,afterSell,goods_id,buy_id,sell_id,
+		             createdBy,creationDate)
+		VALUES
+		(#{shopOrder.code},#{shopOrder.phone},#{shopOrder.name},#{shopOrder.address},
+		 #{shopOrder.goodsNum},#{shopOrder.totalPrice},#{shopOrder.isSend},#{shopOrder.isReceive},
+		 #{shopOrder.afterSell},#{shopOrder.goods_id},#{shopOrder.buy_id},
+		 #{shopOrder.sell_id},#{shopOrder.createdBy},#{shopOrder.creationDate})
+	</insert>
+	
+	<!-- 通过Id对ShopCar购物车的一个商品删除进行操 -->
+	<delete id="delectShopCarById">
+	    delete from shop_car where id = #{id}
+	</delete>
+	
+	<!-- 通过Id对ShopCar购物车的一个商品数量加减进行更新操做 -->
+	<update id="numberPlusMinusById">
+	    update shop_car set car_gnum = #{num} where id = #{id}
+	</update>
+	
+	<!-- 插入购物车商品信息 -->
+	<insert id="insertShopCar" parameterType="com.six.pojo.ShopCar">
+		INSERT INTO
+		shop_car(goods_id, buy_id, sell_id, car_gnum, creationDate)
+		VALUES
+		(#{shopCar.goods_id},#{shopCar.buy_id},#{shopCar.sell_id},#{shopCar.car_gnum},
+		 #{shopCar.creationDate})
+	</insert>
+	
+	
+	<!-- 加入购物车查询商品商家的有关信息 -->
+	<select id="getShopGoodsByGoodsId" resultType="com.six.pojo.ShopGoods">
+		select g.* from shop_goods g
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="goodsid != null and goodsid != '' ">
+				and g.id = #{goodsid}
+			</if>
+		</trim>
+	</select>
+	
+</mapper>

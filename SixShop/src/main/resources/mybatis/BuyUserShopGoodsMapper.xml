@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 映射类的文件路径 -->
+<mapper namespace="com.six.dao.BuyUserShopGoodsMapper">
+	<resultMap id="BaseResultMap" type="com.six.pojo.ShopGoods">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="score" jdbcType="FLOAT" property="score" />
+	</resultMap>
+
+	<!-- 更新评分 -->
+	<update id="updateBuyUserShopGoods">
+		UPDATE shop_goods set score=#{scoreAvg} where
+		id=#{id}
+	</update>
+
+</mapper>

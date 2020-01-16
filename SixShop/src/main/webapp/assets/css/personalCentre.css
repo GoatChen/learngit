@@ -1,0 +1,312 @@
+#listing_li_a a {
+	text-decoration: none;
+	color: black;
+}
+
+#bod {
+	width: 100%;
+	height: 520px;
+	background: #EEECD5;
+}
+
+#whole {
+	width: 100%;
+	margin: 15px auto;
+	height: 520px;
+	background: #EEECD5;
+}
+
+#listing_li_a a:active {
+	color: red;
+}
+
+#left {
+	width: 12%;
+	float: left;
+	margin-left: 30px;
+	border: 1px solid #DCDCDC;
+	height: 520px;
+	background: #F0F0F0;
+	text-align:center;
+}
+
+#pic {}
+
+#account {}
+
+#management {
+	color: #FF4400;
+	padding-top: -200px;
+	font-size: 23px;
+}
+
+#listing {
+	padding-top: 5px;
+	font-size: 15px;
+}
+
+#listing_li {
+	list-style-type: none;
+	clear: both;
+	padding-top: 15px;
+}
+
+#right {
+	border: 1px solid #DCDCDC;
+	width: 83%;
+	float: right;
+	height: 520px;
+	background: #F0F0F0;
+	margin-right: 30px;
+}
+
+#respect {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-size: 18px;
+	margin-left: 30px;
+	margin-top: 10px;
+	color: #FF4400;
+}
+
+#personal {
+	color: #014D7F;
+	font-weight: bold;
+	font-size: 18px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	background-color: #F3F8FE;
+}
+
+#details {
+	margin-left: 50px;
+	margin-top: 20px;
+	font-size: 13px;
+	float: left;
+}
+
+#short {
+	margin-bottom: 5px;
+}
+
+#data {}
+
+#data_a {
+	width: 500px;
+	float: left;
+	padding: 5px;
+}
+
+#data_b {
+	float: left;
+	width: 65px;
+	text-align: right;
+}
+
+#data_c {
+	margin-left: 15px;
+	float: left;
+	width: 50px;
+}
+
+#modifyPersonal {
+	margin-left: 100px;
+	margin-top: 30px;
+	float: left;
+}
+
+#updateUser {
+	height: 30px;
+	width: 160px;
+	font-size: 20px;
+	background-color: #FFAB1B;
+	border: none;
+	border-radius: 5px;
+	color: #FFFFFF;
+}
+
+#hr{
+	width: 100%;
+	height: 1px;
+	background-color: #DCDCDC;
+}
+
+/* 头像css */
+.file {
+	position: relative;
+	/*绝对定位!*/
+	display: inline-block;
+	/*设置为行内元素*/
+	background: #B6B6B6;
+	border: 1px solid #99D3F5;
+	border-radius: 4px;
+	padding: 4px 12px;
+	overflow: hidden;
+	color: #FFFFFF;
+	text-decoration: none;
+	text-indent: 0;
+	line-height: 20px;
+}
+#file1_1{
+	margin-top: 30px;
+	margin-left: 40px;
+}
+
+.file input {
+	position: absolute;
+	/*相对定位*/
+	right: 0;
+	top: 0;
+	opacity: 0;
+	/*将上传组件设置为透明的*/
+	font-size: 100px;
+}
+
+.file:hover {
+	background: #AADDFF;
+	border-color: #78C3F3;
+	color: #004974;
+	text-decoration: none;
+}
+
+#bigpic {
+	margin-left: 5px;
+	margin-top: 10px;
+}
+
+#modifyPersonal {
+	margin-left: 40px;
+	margin-top: 20px;
+	float: left;
+}
+
+#updateUser {
+	height: 30px;
+	width: 160px;
+	font-size: 20px;
+	background-color: #B6B6B6;
+	border: none;
+	border-radius: 5px;
+	color: #FFFFFF;
+}
+
+/* 余额css */
+#remind {
+	margin-top: 30px;
+	margin-bottom: 10px;
+	margin-left: 50px;
+}
+
+#remind_span{
+	color: #FF4400;
+	font-size: 30px;
+}
+
+#data_d {
+	margin-left: 15px;
+	float: left;
+	width: 65px;
+}
+
+#data_e {
+	margin-left: 15px;
+	float: left;
+	width: 200px;
+}
+
+#data_f {
+	margin-top: 20px;
+	margin-left: 30px;
+	float: left;
+	width: 200px;
+}
+
+#money_button {
+	float: left;
+	margin-top: 100px;
+	margin-left: -130px;
+}
+
+/* 积分css */
+#one-column-emphasis {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 14px;
+	width: 1000px;
+	text-align: left;
+	border-collapse: collapse;
+}
+
+#one-column-emphasis th {
+	font-size: 14px;
+	font-weight: normal;
+	padding: 12px 15px;
+	color: #039;
+}
+
+#one-column-emphasis td {
+	padding: 10px 15px;
+	color: #669;
+	border-top: 1px solid #e8edff;
+}
+
+.oce-first {
+	background: #d0dafd;
+	border-right: 10px solid transparent;
+	border-left: 10px solid transparent;
+}
+
+#one-column-emphasis tr:hover td {
+	color: #339;
+	background: #FFFFFF;
+}
+#table_one{
+	float: left;
+}
+#paging{
+	text-align: center;
+	margin: 10px;
+}
+#file_pic{
+	margin-left: 100px;
+	margin-top: 20px;
+}
+#data_g {
+	margin-left: 15px;
+	float: left;
+	width: 80px;
+}
+
+#data_h {
+	margin-left: 15px;
+	float: left;
+	width: 200px;
+}
+#updateUser_2{
+	height: 30px;
+	width: 160px;
+	font-size: 20px;
+	background-color: #FF8A09;
+	border: none;
+	border-radius: 5px;
+	color: #FFFFFF;
+	margin-top: 43px;
+}
+#money_button_3 {
+	float: left;
+	margin-top: 150px;
+	margin-left: -130px;
+}
+
+#money_button_4 {
+	float: left;
+	margin-top: 180px;
+	margin-left: -130px;
+}
+
+#money_button_5 {
+	float: left;
+	margin-top: 120px;
+	margin-left: -130px;
+}

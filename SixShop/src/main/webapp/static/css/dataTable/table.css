@@ -1,0 +1,38 @@
+#example {
+	border-top: 1px solid #FDD922;
+	border-radius: 5px 5px 0px 0px;
+}
+
+#example th {
+	background: #FDD922;
+	font-weight: bold;
+	margin-left: 15px;
+	padding: 8px 0px 8px 30px;
+	border-top: 1px solid #FDD922;
+	border-left: 1px solid #FDD922;
+	border-right: 1px solid #FDD922;
+	border-bottom: 1px solid #FDD922;
+} 
+
+#example td {
+	padding: 5px 10px;
+	text-align: center;
+	border: 1px solid white;
+}
+
+#example tr:nth-of-type(odd) {
+	background: #FFFFFF;
+} 
+
+#example tr:nth-of-type(even) {
+	background: #FFFFE0;
+}
+
+#example tr:hover { 
+	background: #FF8C00;
+	background: #FFEC8B;
+} 
+
+#example tr:hover td {
+	background: none;
+}

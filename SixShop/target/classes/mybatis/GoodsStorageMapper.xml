@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.six.dao.myMapper.GoodsStorageMapper">
+
+	<!--查询所有库存信息 -->
+	<select id="findSomeGoodsStorage" parameterType="String"
+		resultType="com.six.pojo.myEntity.GoodsStorage">
+		select
+		shop_goodsstorage.picPath,shop_goodsstorage.id,shop_goodsstorage.name,
+		shop_goodsstorage.size,shop_goodsstorage.color,
+		shop_goodsstorage.price,shop_goodsstorage.number,
+		shop_goodsstorage.overNum,shop_goodsstorage.backNum,
+		shop_goodsstorage.category1_id,
+		(select
+		categoryName from
+		shop_goodscategory where
+		shop_goodscategory.id=shop_goodsstorage.category1_id) as
+		categoryName1,
+		shop_goodsstorage.category2_id,
+		(select
+		categoryName from
+		shop_goodscategory where
+		shop_goodscategory.id=shop_goodsstorage.category2_id) as
+		categoryName2,
+		shop_goodsstorage.category3_id,
+		(select
+		categoryName from
+		shop_goodscategory where
+		shop_goodscategory.id=shop_goodsstorage.category3_id) as
+		categoryName3,
+		shop_goodsstorage.status
+		from
+		shop_selluser,shop_goodsstorage
+		where
+		shop_selluser.code=#{code}
+		and
+		shop_selluser.id=shop_goodsstorage.sell_id
+	</select>
+
+	<!--查询单个库存信息 -->
+	<select id="findGoodsStorage" parameterType="int"
+		resultType="com.six.pojo.myEntity.GoodsStorage">
+		select * from shop_goodsstorage where id=#{id}
+	</select>
+
+	<!--查询是否有该名称 -->
+	<select id="findName" resultType="com.six.pojo.myEntity.GoodsStorage">
+		select name from
+		shop_goodsstorage where sell_id=#{sell_id} and name=#{name}
+	</select>
+
+	<!--改变商品状态 -->
+	<update id="queryStatus">
+		update shop_goodsstorage set status =#{status} where
+		id=#{id}
+	</update>
+
+	<!-- 增加库存信息 -->
+	<insert id="insGoodsStorage">
+		insert into shop_goodsstorage
+		(name,price,number,overNum,backNum,size,
+		color,picPath,sell_id,goods_id,category1_id,
+		category2_id,category3_id,status,createdBy,creationDate,
+		modifyBy,modifyDate) values
+		(#{goodsStorage.name},
+		#{goodsStorage.price},
+		#{goodsStorage.number},
+		0,
+		0,
+		#{goodsStorage.size},
+		#{goodsStorage.color},
+		#{goodsStorage.picPath},
+		#{goodsStorage.sell_id},
+		null,
+		#{goodsStorage.category1_id},
+		#{goodsStorage.category2_id},
+		#{goodsStorage.category3_id},
+		4,null,null,null,null)
+	</insert>
+
+	<!--修改图片 -->
+	<update id="queryImg">
+		update shop_goodsstorage set picPath=#{picPath} where
+		id=#{id}
+	</update>
+
+	<!--修改库存信息 -->
+	<update id="queryGoodsStorage">
+		update shop_goodsstorage set
+		name=#{goodsStorage.name},
+		price=#{goodsStorage.price},
+		number=#{goodsStorage.number},
+		overNum=0,
+		backNum=0,
+		size=#{goodsStorage.size},
+		color=#{goodsStorage.color},
+		picPath=#{goodsStorage.picPath},
+		sell_id=#{goodsStorage.sell_id},
+		goods_id=null,
+		category1_id=#{goodsStorage.category1_id},
+		category2_id=#{goodsStorage.category2_id},
+		category3_id=#{goodsStorage.category3_id},
+		status=4
+		where
+		id=#{goodsStorage.id}
+	</update>
+
+	<!-- 删除单个库存信息 -->
+	<delete id="delGoodsStorage">
+		delete from shop_goodsstorage where id=#{id}
+	</delete>
+
+	<!--删除批量库存信息 -->
+	<delete id="delSomeGoodsStorage" parameterType="map">
+		delete from
+		shop_goodsstorage where id IN(${idStr})
+	</delete>
+
+</mapper>

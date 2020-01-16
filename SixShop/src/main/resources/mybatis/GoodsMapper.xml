@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.six.dao.myMapper.GoodsMapper">
+
+	<!-- 增加商品信息 -->
+	<insert id="insGoods">
+		insert into shop_goods
+		(name,price,score,size,color,description,
+		picPojoPath,producerName,produceDate,sell_id,
+		category1_id,category2_id,category3_id,createdBy,
+		creationDate,modifyBy,modifyDate) values
+		(#{goods.name},#{goods.price},#{goods.score},
+		#{goods.size},#{goods.color},#{goods.description},
+		#{goods.picPojoPath},#{goods.producerName},#{goods.produceDate},
+		#{goods.sell_id},#{goods.category1_id},#{goods.category2_id},
+		#{goods.category3_id},#{goods.createdBy},#{goods.creationDate},
+		null,null)
+	</insert>
+
+	<!-- 删除商品信息 -->
+	<delete id="delGoods">
+		delete from shop_goods where name=#{name}
+	</delete>
+
+</mapper>

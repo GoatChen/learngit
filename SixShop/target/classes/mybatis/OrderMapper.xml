@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.six.dao.myMapper.OrderMapper">
+
+	<!--查询所有退货信息 -->
+	<resultMap type="com.six.pojo.myEntity.Order" id="rtOrder">
+		<id property="sell_id" column="sell_id" />
+		<id property="goods_id" column="goods_id" />
+		<id property="buy_id" column="buy_id" />
+		<result property="code" column="code" />
+		<result property="goodsNum" column="goodsNum" />
+		<result property="totalPrice" column="totalPrice" />
+		<result property="isSend" column="isSend" />
+		<result property="isReceive" column="isReceive" />
+		<result property="afterSell" column="afterSell" />
+		<association property="goods" javaType="com.six.pojo.myEntity.Goods">
+			<id property="id" column="id" />
+			<result property="name" column="name" />
+		</association>
+		<association property="buyUser" javaType="com.six.pojo.myEntity.BuyUser">
+			<id property="id" column="id" />
+			<result property="code" column="bucode" />
+		</association>
+	</resultMap>
+	<select id="findRtOrder" parameterType="String"
+		resultMap="rtOrder">
+		select
+		shop_order.code,shop_order.goodsNum,shop_order.totalPrice,
+		shop_goods.name,shop_buyuser.code as bucode,
+		shop_order.isSend,shop_order.isReceive,
+		shop_order.afterSell
+		from
+		shop_order,shop_buyuser,shop_selluser,shop_goods
+		where
+		shop_selluser.code=#{code} and
+		shop_order.sell_id=shop_selluser.id
+		and
+		shop_order.goods_id=shop_goods.id and
+		shop_order.buy_id=shop_buyuser.id and
+		shop_order.afterSell=2
+	</select>
+
+	<!--查询所有申请退货信息 -->
+	<resultMap type="com.six.pojo.myEntity.Order" id="applyOrder">
+		<id property="sell_id" column="sell_id" />
+		<id property="goods_id" column="goods_id" />
+		<id property="buy_id" column="buy_id" />
+		<result property="code" column="code" />
+		<result property="goodsNum" column="goodsNum" />
+		<result property="totalPrice" column="totalPrice" />
+		<result property="isSend" column="isSend" />
+		<result property="isReceive" column="isReceive" />
+		<result property="afterSell" column="afterSell" />
+		<association property="goods" javaType="com.six.pojo.myEntity.Goods">
+			<id property="id" column="id" />
+			<result property="name" column="name" />
+		</association>
+		<association property="buyUser" javaType="com.six.pojo.myEntity.BuyUser">
+			<id property="id" column="id" />
+			<result property="code" column="bucode" />
+		</association>
+	</resultMap>
+	<select id="findApplyOrder" parameterType="String"
+		resultMap="applyOrder">
+		select
+		shop_order.code,shop_order.goodsNum,shop_order.totalPrice,
+		shop_goods.name,shop_buyuser.code as bucode,
+		shop_order.isSend,shop_order.isReceive,
+		shop_order.afterSell
+		from
+		shop_order,shop_buyuser,shop_selluser,shop_goods
+		where
+		shop_selluser.code=#{code} and
+		shop_order.sell_id=shop_selluser.id
+		and
+		shop_order.goods_id=shop_goods.id and
+		shop_order.buy_id=shop_buyuser.id and
+		shop_order.afterSell=1
+	</select>
+
+	<!--改变订单状态 -->
+	<update id="queryApplyOrder">
+		update shop_order set afterSell =2 where
+		code=#{code}
+	</update>
+
+<!-- *************杨汉斌负责模块*************** -->
+	<!-- 查询所有订单 -->
+	<select id="selectAllOrder" resultType="com.six.pojo.myEntity.Order">
+		SELECT * ,
+		(SELECT g.name FROM shop_goods g WHERE g.id=o.goods_id ) AS goodName,
+		(SELECT b.name FROM shop_buyuser b WHERE b.id=o.buy_id ) AS buyName,
+		(SELECT s.sellName FROM shop_selluser s WHERE s.id=o.sell_id ) AS sellName
+		FROM shop_order o WHERE o.sell_id=#{sell_id}
+	</select>
+	
+	<!-- 获取所有的订单页数 -->
+	<select id="selectOrderAllCount" resultType="int">
+		SELECT COUNT(id) FROM shop_order where sell_id=#{sell_id}
+	</select>
+	
+	<!-- 删除用户订单记录 -->
+	<delete id="deleteOrderById">
+		DELETE FROM shop_order WHERE id=#{id}
+	</delete>
+
+</mapper>

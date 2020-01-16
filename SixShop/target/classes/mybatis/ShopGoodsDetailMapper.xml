@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.six.dao.ShopGoodsDetailMapper">  <!-- 要对应映射接口 -->
+    
+    <!-- 显示评论 -->
+    <!-- 根据buy_id和comment_id更新ShopLike的isLike -->
+    <update id="updateShopLikeByBuyIdAndCommentId">
+    	update shop_like set isLike = #{isLike} where buy_id = #{buy_id} and comment_id = #{comment_id}
+    </update>
+    <!-- /显示评论 -->
+    
+    <!-- 点赞 -->
+    <!-- 根据id更新ShopComment的likeNum（likeNum+1） -->
+    <update id="updateShopCommentAddById">
+    	UPDATE shop_comment SET likeNum = likeNum+1 WHERE id = #{id};
+    </update>
+    <!-- 根据id更新ShopComment的likeNum（likeNum-1） -->
+    <update id="updateShopCommentSubById">
+    	UPDATE shop_comment SET likeNum = likeNum-1 WHERE id = #{id};
+    </update>
+    
+    <!-- 根据buy_id和comment_id查询ShopLike（用ShopIndexMapper.xml里的） -->
+    
+    <!-- 根据id查询ShopComment -->
+	<select id="selectShopCommentById" resultType="shopComment">
+		select * from shop_comment where id = #{id}
+	</select>
+	
+	<!-- 插入一条ShopLike数据 -->
+	<insert id="insertShopLike">
+		insert into shop_like(isLike,buy_id,comment_id,createdBy,creationDate) values(#{isLike},#{buy_id},#{comment_id},#{createdBy},#{creationDate})
+	</insert>
+    <!-- /点赞 -->	
+	
+	<!-- 进入购买页 -->
+	<!-- 根据buy_id获取ShopAddress列表 -->
+	<resultMap type="shopAddress" id="selectShopAddressMap">
+		<id property="id" column="id"/>
+		<result property="address" column="address"/>
+    	<result property="phone" column="phone"/>
+		<result property="name" column="name"/>
+    	<result property="isDefault" column="isDefault"/>
+		<result property="buy_id" column="buy_id"/>
+    	
+    	<result property="createdBy" column="createdBy"/>
+    	<result property="creationDate" column="creationDate"/>
+    	<result property="modifyBy" column="modifyBy"/>	
+    	<result property="modifyDate" column="modifyDate"/>
+	</resultMap>
+	<select id="selectShopAddressByBuyId" resultMap="selectShopAddressMap">
+		select * from shop_address where buy_id = #{buy_id}
+	</select>
+	
+	<!-- 根据id查询ShopGoods（用ShopIndexMapper.xml里的） -->
+	<!-- /进入购买页 -->
+	
+	<!-- 购买商品，下订单 -->
+	<!-- 插入一条ShopOrder数据 -->
+	<insert id="insertShopOrder">
+		insert into shop_order(code,phone,name,address,goodsNum,totalPrice,isSend,isReceive,afterSell,goods_id,buy_id,sell_id,createdBy,creationDate)
+		values(#{code},#{phone},#{name},#{address},#{goodsNum},#{totalPrice},#{isSend},#{isReceive},#{afterSell},#{goods_id},#{buy_id},#{sell_id},#{createdBy},#{creationDate})
+	</insert>
+	<!-- 根据id查询ShopAddress -->
+	<select id="selectShopAddressById" resultType="shopAddress">
+		select * from shop_address where id = #{id}
+	</select>
+
+</mapper>

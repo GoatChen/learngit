@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 映射类的文件路径 -->
+<mapper namespace="com.six.dao.myMapper.CommentMapper">
+	
+	<!-- 查询关于卖家所有用户评论 -->
+	<select id="selectAllCommentBySellId" resultType="com.six.pojo.myEntity.Comment">
+	
+	SELECT * ,
+	(SELECT g.name FROM shop_goods g WHERE g.id=c.goods_id )as goodName,
+	(SELECT b.name FROM shop_buyuser b WHERE b.id=c.buy_id )as buyName,
+	(SELECT s.sellName FROM shop_selluser s WHERE s.id=#{sell_id})as sellName,
+	(SELECT s.picPojoPath FROM shop_selluser s WHERE s.id=#{sell_id} )as picPojoPath,
+	(SELECT h.content FROM shop_commentanwser h WHERE h.comment_id=c.id ORDER BY h.creationDate DESC limit 1)as contentAnwser
+	FROM shop_comment c WHERE (SELECT g.sell_id FROM shop_goods g WHERE g.id=c.goods_id )=#{sell_id} ORDER BY c.creationDate DESC
+    </select>
+	
+	<!-- 查询单个用户所有评论 -->
+	<select id="selectACommentById" resultType="com.six.pojo.myEntity.Comment">
+	SELECT * ,
+	(SELECT g.name FROM shop_goods g WHERE g.id=c.goods_id )as goodName,
+	(SELECT b.name FROM shop_buyuser b WHERE b.id=c.buy_id )as buyName,
+	(SELECT s.sellName FROM shop_selluser s WHERE s.id=(SELECT g.sell_id FROM shop_goods g WHERE g.id=c.goods_id ))as sellName,
+	(SELECT g.picPojoPath FROM shop_goods g WHERE g.id=c.goods_id )as picPojoPath
+	FROM shop_comment c WHERE c.buy_id=#{buy_id} ORDER BY creationDate DESC
+    </select>
+    
+    <!-- 获取所有评论页数 -->
+    <select id="selectCommentAllCount" resultType="int">
+    SELECT COUNT(id) FROM shop_comment c where (SELECT g.sell_id FROM shop_goods g WHERE g.id=c.goods_id )=#{sell_id}
+    </select>
+    
+    <!-- 回复买家评论 -->
+	<insert id="addCommentAnswer" parameterType="com.six.pojo.myEntity.CommentAnswer">
+		INSERT INTO shop_commentanwser (content,goods_id,comment_id,buy_id,creationDate) 
+		VALUES(#{commentAnswer.content},#{commentAnswer.goods_id},#{commentAnswer.comment_id},#{buy_id},#{commentAnswer.creationDate})
+	</insert>
+
+</mapper>

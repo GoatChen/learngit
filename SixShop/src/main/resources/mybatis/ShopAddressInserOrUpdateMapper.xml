@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 映射类的文件路径 -->
+<mapper namespace="com.six.dao.ShopAddressInsertOrUpdateMapper">
+	<resultMap id="BaseResultMap" type="com.six.pojo.ShopAddress">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="isDefault" jdbcType="INTEGER" property="isDefault" />
+		<result column="buy_id" jdbcType="INTEGER" property="buy_id" />
+		<result column="createdBy" jdbcType="INTEGER" property="createdBy" />
+		<result column="creationDate" jdbcType="DATE" property="creationDate" />
+		<result column="modifyBy" jdbcType="INTEGER" property="modifyBy" />
+		<result column="modifyDate" jdbcType="DATE" property="modifyDate" />
+	</resultMap>
+
+	<!-- 获取所有地址总页数 -->
+	<select id="selectAddressAllCount" resultType="int">
+		select count(id) from shop_address where buy_id=#{buy_id}
+	</select>
+
+	<!-- 查询出所有地址 -->
+	<select id="selectAddress"
+		resultMap="BaseResultMap">
+		select * from shop_address
+		where buy_id=#{buy_id} limit
+		#{currentPageNo},#{pageSize}
+	</select>
+
+	<!-- 根据id查出该地址并返回到修改页面 -->
+	<select id="toUpdateBuyUserAddress" parameterType="Object"
+		resultMap="BaseResultMap">
+		select * from shop_address where id=#{id}
+	</select>
+
+	<!-- 更新地址 -->
+	<update id="updateBuyUserAddress" parameterType="com.six.pojo.ShopAddress">
+		update
+		shop_address set
+		address=#{address},phone=#{phone},name=#{name},buy_id=#{buy_id}
+		where id=#{id}
+	</update>
+
+	<!-- 修改默认地址 -->
+	<update id="isDefaultAddress" parameterType="com.six.pojo.ShopAddress">
+		update
+		shop_address set
+		isDefault=1
+		where id=#{id}
+	</update>
+	
+	<!-- 增加地址 -->
+	<insert id="insertAddress" parameterType="com.six.pojo.ShopAddress">
+		insert into
+		shop_address(address,phone,name,buy_id,isDefault)
+		values(#{address},#{phone},#{name},#{buy_id},#{isDefault})
+	</insert>
+	
+	<!-- 删除地址 -->
+	<delete id="toDeleteBuyUserAddress" parameterType="int">
+		DELETE FROM shop_address where id=#{id}
+	</delete>
+	
+	<!-- 把所有地址改为不默认 -->
+	<update id="isDefaultAllAddress" parameterType="com.six.pojo.ShopAddress">
+		update
+		shop_address set
+		isDefault=0
+	</update>
+
+</mapper>
